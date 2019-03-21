@@ -32,6 +32,12 @@ public class CommercialBankExchangeRateProvider {
         }
     }
 
+    public List<Bank> findBankByCurrentDate() {
+        return em.createNamedQuery("findBankByDate", Bank.class)
+                .setParameter("date", LocalDate.now())
+                .getResultList();
+    }
+
     public List<CommercialBankExchangeRateDTO> findByDate(LocalDate date) {
         return em.createNamedQuery("findByDate", CommercialBankExchangeRate.class)
                 .setParameter("date", date)

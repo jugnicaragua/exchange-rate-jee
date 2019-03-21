@@ -31,7 +31,7 @@ public class CentralBankExchangeRateProvider {
                     .setParameter("currency", currency)
                     .getSingleResult();
         } catch (NoResultException nre) {
-            return Long.valueOf(0);
+            return 0l;
         }
     }
 
