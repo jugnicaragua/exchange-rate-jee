@@ -21,11 +21,12 @@ import javax.persistence.Table;
 @SequenceGenerator(name = "seq", sequenceName = "cb_exchange_rate_id_seq", allocationSize = 1)
 @NamedQueries({
     @NamedQuery(name = "findByBankAndDate", query = "select cb from CommercialBankExchangeRate cb where bank = :bank and date = :date"),
-    @NamedQuery(name = "findByDate", query = "select cb from CommercialBankExchangeRate cb where date = :date"),
-    @NamedQuery(name = "findByBankAndRangeOfDates", query = "select cb from CommercialBankExchangeRate cb where bank = :bank and " +
-            "date >= :firstDay and date <= :lastDay"),
-    @NamedQuery(name = "findByRangeOfDates", query = "select cb from CommercialBankExchangeRate cb where date >= :firstDay and " +
-            "date <= :lastDay")
+    @NamedQuery(name = "findByDate", query = "select cb from CommercialBankExchangeRate cb join fetch cb.currency where cb.date = :date"),
+    @NamedQuery(name = "findByBankAndRangeOfDates", query = "select cb from CommercialBankExchangeRate cb join fetch cb.currency " +
+            "where cb.bank = :bank and cb.date >= :firstDay and cb.date <= :lastDay"),
+    @NamedQuery(name = "findByRangeOfDates", query = "select cb from CommercialBankExchangeRate cb join fetch cb.currency " +
+            "where cb.date >= :firstDay and cb.date <= :lastDay"),
+    @NamedQuery(name = "findBankByDate", query = "select cb.bank from CommercialBankExchangeRate cb where date = :date")
 })
 public class CommercialBankExchangeRate extends OnlyCreationTimeAndSythenticIdentifier<Integer> {
 

@@ -23,8 +23,8 @@ import ni.jug.exchangerate.util.Dates;
 @NamedQueries({
     @NamedQuery(name = "countByCurrentPeriodAndCurrency", query = "select count(cber) from CentralBankExchangeRate cber where " +
             "cber.date >= :firstDay and cber.date <= :lastDay and cber.currency = :currency"),
-    @NamedQuery(name = "findByPeriodAndCurrency", query = "select cber from CentralBankExchangeRate cber where cber.date >= :firstDay " +
-            "and cber.date <= :lastDay and cber.currency = :currency")
+    @NamedQuery(name = "findByPeriodAndCurrency", query = "select cber from CentralBankExchangeRate cber join fetch cber.currency " +
+            "where cber.date >= :firstDay and cber.date <= :lastDay and cber.currency = :currency")
 })
 public class CentralBankExchangeRate extends OnlyCreationTime {
 
