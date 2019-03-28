@@ -19,7 +19,7 @@ import ni.jug.exchangerate.util.Dates;
  * @author aalaniz
  */
 @Entity
-@Table(name =  "ncb_exchange_rate")
+@Table(name = "ncb_exchange_rate")
 @NamedQueries({
     @NamedQuery(name = "countByCurrentPeriodAndCurrency", query = "select count(cber) from CentralBankExchangeRate cber where " +
             "cber.date >= :firstDay and cber.date <= :lastDay and cber.currency = :currency"),
