@@ -22,4 +22,10 @@ public final class Dates {
         return ChronoUnit.DAYS.between(firstDay, firstDayNextMonth);
     }
 
+    public static long daysForPeriod(LocalDate period) {
+        LocalDate firstDay = period.withDayOfMonth(1);
+        LocalDate firstDayNextMonth = firstDay.plusMonths(1);
+        return ChronoUnit.DAYS.between(firstDay, firstDayNextMonth);
+    }
+
 }

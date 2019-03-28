@@ -21,8 +21,8 @@ public class CentralBankExchangeRateProvider {
     @PersistenceContext
     EntityManager em;
 
-    public long countByCurrentPeriodAndCurrency(Currency currency) {
-        LocalDate firstDay = LocalDate.now().withDayOfMonth(1);
+    public long countByPeriodAndCurrency(LocalDate period, Currency currency) {
+        LocalDate firstDay = period.withDayOfMonth(1);
         LocalDate lastDay = firstDay.plusMonths(1).minusDays(1);
         try {
             return em.createNamedQuery("countByCurrentPeriodAndCurrency", Long.class)
@@ -33,6 +33,10 @@ public class CentralBankExchangeRateProvider {
         } catch (NoResultException nre) {
             return 0l;
         }
+    }
+
+    public long countByCurrentPeriodAndCurrency(Currency currency) {
+        return countByPeriodAndCurrency(LocalDate.now(), currency);
     }
 
     public List<CentralBankExchangeRateDTO> findByPeriodAndCurrency(LocalDate period, Currency currency) {
