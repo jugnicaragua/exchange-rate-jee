@@ -2,6 +2,7 @@ package ni.jug.exchangerate.logic;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import ni.jug.exchangerate.model.Currency;
 
@@ -12,13 +13,23 @@ import ni.jug.exchangerate.model.Currency;
 @Stateless
 public class CurrencyProvider {
 
+    private static final String DOLLAR_ISO_STRING_CODE = "USD";
+
     @PersistenceContext
     EntityManager em;
 
     public Currency getCurrencyByIsoStringCode(String isoStringCode) {
-        return em.createNamedQuery("byIsoStringCode", Currency.class)
-                .setParameter("isoStringCode", isoStringCode)
-                .getSingleResult();
+        try {
+            return em.createNamedQuery("byIsoStringCode", Currency.class)
+                    .setParameter("isoStringCode", isoStringCode)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
+        }
+    }
+
+    public Currency getDollar() {
+        return getCurrencyByIsoStringCode(DOLLAR_ISO_STRING_CODE);
     }
 
 }
