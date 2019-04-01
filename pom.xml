@@ -11,6 +11,13 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>11</maven.compiler.release>
         <failOnMissingWebXml>false</failOnMissingWebXml>
+
+        <!-- Flyway config -->
+        <exchangerate.db>exchangerate</exchangerate.db>
+        <flyway.url>jdbc:postgresql://localhost:5432/${exchangerate.db}?ApplicationName=Flyway</flyway.url>
+        <flyway.user>jugni</flyway.user>
+        <flyway.password>jugni</flyway.password>
+        <flyway.placeholders.owner>${flyway.user}</flyway.placeholders.owner>
     </properties>
 
     <dependencies>
@@ -34,6 +41,26 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>5.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>migrate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>42.2.5</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>

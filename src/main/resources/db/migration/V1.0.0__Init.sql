@@ -21,7 +21,7 @@ create table if not exists currency (
 	, constraint iso_string_code_uq unique (iso_string_code)
 );
 
-alter table currency OWNER to jugni;
+alter table currency OWNER to ${owner};
 
 create table if not exists ncb_exchange_rate (
 	id integer not null constraint ncb_exchange_rate_pk primary key
@@ -32,7 +32,7 @@ create table if not exists ncb_exchange_rate (
 	, constraint ncb_exchange_rate_uq unique (currency_id, exchange_rate_date)
 );
 
-alter table ncb_exchange_rate OWNER to jugni;
+alter table ncb_exchange_rate OWNER to ${owner};
 
 create table if not exists cb_exchange_rate (
 	id serial not null constraint cb_exchange_rate_pk primary key
@@ -47,20 +47,5 @@ create table if not exists cb_exchange_rate (
 	, constraint cb_exchange_rate_uq unique (bank, currency_id, exchange_rate_date)
 );
 
-alter table cb_exchange_rate OWNER to jugni;
-
--- =================================================================================================
--- Importar datos
--- =================================================================================================
-INSERT INTO currency (
-	iso_numeric_code
-	, iso_string_code
-	, symbol
-	, short_description
-	, description
-	, is_domestic
-	, is_active)
-VALUES ('558', 'NIO', 'C$', 'CORDOBA', 'CORDOBA NICARAGÜENSE', true, true)
-, ('840', 'USD', '$', 'DOLAR', 'DOLAR ESTADOUNIDENSE', false, true);
-
+alter table cb_exchange_rate OWNER to ${owner};
 
